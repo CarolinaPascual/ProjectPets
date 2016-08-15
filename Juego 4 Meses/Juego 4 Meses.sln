@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Juego 2 Meses - Shattered Memories - Martina Marcaccio y Diego Garcia - V4 Final Release.CSharp", "Juego 2 Meses - Shattered Memories - Martina Marcaccio y Diego Garcia - V4 Final Release.CSharp.csproj", "{476EBD52-4C68-683D-2792-843A1FD67E37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Juego 4 Meses.CSharp", "Juego 4 Meses.CSharp.csproj", "{A78B6714-6621-13BE-D0C2-85095738D4EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{476EBD52-4C68-683D-2792-843A1FD67E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{476EBD52-4C68-683D-2792-843A1FD67E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{476EBD52-4C68-683D-2792-843A1FD67E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{476EBD52-4C68-683D-2792-843A1FD67E37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A78B6714-6621-13BE-D0C2-85095738D4EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A78B6714-6621-13BE-D0C2-85095738D4EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A78B6714-6621-13BE-D0C2-85095738D4EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A78B6714-6621-13BE-D0C2-85095738D4EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,15 +7,13 @@ public class CLevelState : CGameState
     public const int HOME = 0;
     private CPlayer mPlayer;
 	//private CBulletManager mBulletManager;
-	private CEnemyManager mEnemyManager;
-    private CCloudManager mCloudManager;
-    private CBackgroundManager mBackgroundManager;
+	//private CEnemyManager mEnemyManager;
+    //private CCloudManager mCloudManager;
+    //private CBackgroundManager mBackgroundManager;
     private CWallManager mWallManager;
-    private static int mCloudSpeed = 15;
+    //private static int mCloudSpeed = 15;
     private CTileMap mMap;
     private CCamera mCamera;
-    private CDreamCatcher mDreamCatcher;
-    private CDreamCatcherManager mDreamCatcherManager;
     public static int mLevel = 1;
     private CEnemy mEnemy1;
 
@@ -23,20 +21,18 @@ public class CLevelState : CGameState
 	{
 		mPlayer = new CPlayer ();
 		//mBulletManager = new CBulletManager ();
-		mEnemyManager = new CEnemyManager ();
-        mCloudManager = new CCloudManager();
-        mBackgroundManager = new CBackgroundManager();
+		//mEnemyManager = new CEnemyManager ();
+       // mCloudManager = new CCloudManager();
+        //  mBackgroundManager = new CBackgroundManager();
         mWallManager = new CWallManager();
-        mDreamCatcherManager = new CDreamCatcherManager();
         mMap = new CTileMap(1);
         mCamera = new CCamera();
         mCamera.setXY(0,0);
         mCamera.setGameObjectToFollow(mPlayer);
         CGame.inst().setCamera(mCamera);
-        createClouds();
-        mDreamCatcher = new CDreamCatcher(CGameConstants.WORLD_WIDTH - 2*CTileMap.TILE_WIDTH, CGameConstants.SCREEN_HEIGHT - 2*CTileMap.TILE_HEIGHT);
-        mEnemy1 = new CEnemy();
-        mEnemy1.setXY(600, CGameConstants.SCREEN_HEIGHT - mEnemy1.getHeight() - CTileMap.TILE_HEIGHT);
+        //createClouds();
+        //mEnemy1 = new CEnemy();
+        //mEnemy1.setXY(600, CGameConstants.SCREEN_HEIGHT - mEnemy1.getHeight() - CTileMap.TILE_HEIGHT);
 
     }
 
@@ -44,7 +40,7 @@ public class CLevelState : CGameState
     override public void init()
 	{
 		base.init ();
-        setBackground();
+        //setBackground();
         setWall();
 	}
 
@@ -55,18 +51,17 @@ public class CLevelState : CGameState
 
     private void setWall()
     {
-        int wallsPerScreen = 4;
+        int wallsPerScreen = 2;
         int screenWidth = wallsPerScreen*CGameConstants.WALL_WIDTH;
         int screensPerWorld = (int)(CGameConstants.WORLD_WIDTH / screenWidth) + 1;
         for(int i = 0; i < screensPerWorld; i++)
         {
-            int configNumber = CMath.randomIntBetween(0, 13);
             int index = 0;
             for (int j = 0; j < wallsPerScreen; j++)
             {
                 CWall a;
-                a = new CWall(CGameConstants.WALL_CONFIGURATIONS[configNumber][index]);
-                a.setXYZ(screenWidth*i + j * CGameConstants.WALL_WIDTH, 200, -2);
+                a = new CWall(CGameConstants.WALL_CONFIGURATIONS[0][index]);
+                a.setXYZ(screenWidth*i + j * CGameConstants.WALL_WIDTH, 0, -2);
                 a.setSortingLayerName("Background");
                 a.setName("Wall");
                 CWallManager.inst().add(a);
@@ -105,7 +100,7 @@ public class CLevelState : CGameState
         }
     }
 
-    private void createClouds()
+    /*private void createClouds()
     {
         //How many pixels there is between clouds(aprox since it's random)
         int frequency = 1000;
@@ -122,8 +117,8 @@ public class CLevelState : CGameState
             CCloudManager.inst().add(a);
         }
         
-    }
-
+    }*/
+    /*
     private void checkCloudPosition()
     {
         if(CCloudManager.inst().length() != 0)
@@ -138,7 +133,7 @@ public class CLevelState : CGameState
             }
         }
         
-    }
+    }*/
 
     private void nextLevel() {
         
@@ -146,21 +141,19 @@ public class CLevelState : CGameState
         Debug.Log("asfkasdgfsdgfsdk");
         mLevel += 1;
         mMap.loadLevel(mLevel);
-        mPlayer.restartPlayer();
-        mCloudManager.destroy();
+        //mPlayer.restartPlayer();
+        /*mCloudManager.destroy();
         mCloudManager = null;
         mCloudManager = new CCloudManager();
         mWallManager.destroy();
         mWallManager = null;
         mWallManager = new CWallManager();
-        mDreamCatcherManager.destroy();
-        mDreamCatcherManager = null;
-        mDreamCatcherManager = new CDreamCatcherManager();
-        mCamera.setXY(0, 0);
         createClouds();
         mDreamCatcher = new CDreamCatcher(CGameConstants.WORLD_WIDTH - 2*CTileMap.TILE_WIDTH, CGameConstants.SCREEN_HEIGHT - 2 * CTileMap.TILE_HEIGHT);
+        */
+        mCamera.setXY(0, 0);
         CEnemyManager.inst().destroy();
-        mEnemyManager = new CEnemyManager();
+        //mEnemyManager = new CEnemyManager();
         mEnemy1 = new CEnemy();
         mEnemy1.setXY(1000, CGameConstants.SCREEN_HEIGHT - mEnemy1.getHeight() - CTileMap.TILE_HEIGHT);
 
@@ -169,36 +162,35 @@ public class CLevelState : CGameState
 	override public void update()
 	{
 		base.update ();
-        checkLoseCondition();
-        checkWinCondition();
+        //checkLoseCondition();
+        //checkWinCondition();
         if (CKeyboard.firstPress (CKeyboard.ESCAPE)) 
 		{
 			CGame.inst().setState(new CMainMenuState());
 			return;
 		}
-        mBackgroundManager.update();
+        //mBackgroundManager.update();
         mWallManager.update();
-        mDreamCatcherManager.update();
         mPlayer.update();
         //mBulletManager.update();
-		mEnemyManager.update();
-        mCloudManager.update();
-        checkCloudPosition();
+		//mEnemyManager.update();
+        //mCloudManager.update();
+        //checkCloudPosition();
 		mMap.update();
         mCamera.update();
         
         
 	}
 
-    private void checkLoseCondition()
+    /*private void checkLoseCondition()
     {
         if (mPlayer.isDead())
         {
             restartLevel();
         }
-    }
+    }*/
 
-    private void checkWinCondition()
+    /*private void checkWinCondition()
     {
         if (mPlayer.isGameOver())
         {
@@ -211,18 +203,17 @@ public class CLevelState : CGameState
         mPlayer.restartPlayer();
         mCamera.setXY(0, 0);
     }
-
+    */
     override public void render()
 	{
 		base.render ();
 
-        mBackgroundManager.render();
+        //mBackgroundManager.render();
         mWallManager.render();
-        mCloudManager.render();
+        //mCloudManager.render();
 		mPlayer.render();
-        mDreamCatcherManager.render();
-		//mBulletManager.render();
-		mEnemyManager.render();
+        //mBulletManager.render();
+		//mEnemyManager.render();
         mMap.render();
 	}
 
@@ -230,22 +221,18 @@ public class CLevelState : CGameState
 	{
 		base.destroy();
 
-        mBackgroundManager.destroy();
-        mBackgroundManager = null;
+        //mBackgroundManager.destroy();
+        //mBackgroundManager = null;
         mWallManager.destroy();
         mWallManager = null;
         mPlayer.destroy();
 		mPlayer = null;
-        mDreamCatcher.destroy();
-        mDreamCatcher = null;
-        mDreamCatcherManager.destroy();
-        mDreamCatcherManager = null;
         //mBulletManager.destroy();
         //mBulletManager = null;
-        mEnemyManager.destroy();
-        mEnemyManager = null;
-        mCloudManager.destroy();
-        mCloudManager = null;
+        //mEnemyManager.destroy();
+        //mEnemyManager = null;
+        //mCloudManager.destroy();
+        //mCloudManager = null;
         mMap.destroy();
 		mMap = null;
 	}

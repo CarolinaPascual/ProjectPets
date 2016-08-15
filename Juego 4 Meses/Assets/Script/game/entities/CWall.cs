@@ -3,31 +3,23 @@ using System.Collections;
 
 public class CWall : CSprite {
     
-    private const int WALL_FULL = 0;
-    private const int WALL_WINDOW = 1;
-    private const int WALL_RIGHT = 2;
-    private const int WALL_LEFT = 3;
+    private const int WALL_LEFT = 0;
+    private const int WALL_RIGHT = 1;
+    
     private int mWallType;
 
     public CWall(int aWallType)
     {
         mWallType = aWallType;
-        if(mWallType == CWall.WALL_FULL)
+        if(mWallType == CWall.WALL_LEFT)
         {
-            setImage(Resources.Load<Sprite>("Sprites/Walls/Wall000"));
-        }
-        if (mWallType == CWall.WALL_WINDOW)
-        {
-            setImage(Resources.Load<Sprite>("Sprites/Walls/Wall001"));
+            setImage(Resources.Load<Sprite>("Sprites/Background/background1"));
         }
         if (mWallType == CWall.WALL_RIGHT)
         {
-            setImage(Resources.Load<Sprite>("Sprites/Walls/Wall002"));
+            setImage(Resources.Load<Sprite>("Sprites/Background/background2"));
         }
-        if (mWallType == CWall.WALL_LEFT)
-        {
-            setImage(Resources.Load<Sprite>("Sprites/Walls/Wall003"));
-        }
+        
     }
 
     override public void update()

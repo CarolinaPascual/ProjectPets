@@ -19,9 +19,7 @@ public class CTile : CSprite
 		setImage (aSprite);
 		setSortingLayerName ("TileMap");
 		mWalkable = true;
-        mPlatform = false;
-        mLadder = false;
-        mHangable = false;
+        
 	}
 
 	public void setTileIndex(int aTileIndex)
@@ -45,7 +43,7 @@ public class CTile : CSprite
 		mWalkable = aIsWalkable;
 	}
 
-    public bool isHangable()
+    /*public bool isHangable()
     {
         return mHangable;
     }
@@ -78,7 +76,7 @@ public class CTile : CSprite
     public bool isFloor()
     {
         return isPlatform() || !isWalkable();
-    }
+    }*/
 
     override public void render()
 	{
