@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\Script\api\entities\CGenericBullet.cs" />
     <Compile Include="Assets\Script\api\entities\CGenericEnemy.cs" />
+    <Compile Include="Assets\Script\api\entities\CTelegram.cs" />
     <Compile Include="Assets\Script\api\framework\CCamera.cs" />
     <Compile Include="Assets\Script\api\framework\CGame.cs" />
     <Compile Include="Assets\Script\api\framework\CGameState.cs" />
@@ -78,18 +79,26 @@
     <Compile Include="Assets\Script\api\sprites\CManager.cs" />
     <Compile Include="Assets\Script\api\sprites\CSprite.cs" />
     <Compile Include="Assets\Script\game\CGameConstants.cs" />
+    <Compile Include="Assets\Script\game\entities\AStar.cs" />
     <Compile Include="Assets\Script\game\entities\CCloud.cs" />
     <Compile Include="Assets\Script\game\entities\CDreamCatcher.cs" />
     <Compile Include="Assets\Script\game\entities\CEnemy.cs" />
+    <Compile Include="Assets\Script\game\entities\CGrid.cs" />
+    <Compile Include="Assets\Script\game\entities\CNode.cs" />
     <Compile Include="Assets\Script\game\entities\CPlayer.cs" />
     <Compile Include="Assets\Script\game\entities\CPlayerBullet.cs" />
+    <Compile Include="Assets\Script\game\entities\CTower.cs" />
     <Compile Include="Assets\Script\game\entities\CWall.cs" />
     <Compile Include="Assets\Script\game\managers\CBackgroundManager.cs" />
     <Compile Include="Assets\Script\game\managers\CBulletManager.cs" />
     <Compile Include="Assets\Script\game\managers\CCloudManager.cs" />
     <Compile Include="Assets\Script\game\managers\CDreamCatcherManager.cs" />
     <Compile Include="Assets\Script\game\managers\CEnemyManager.cs" />
+    <Compile Include="Assets\Script\game\managers\CEntityManager.cs" />
+    <Compile Include="Assets\Script\game\managers\CPlayerManager.cs" />
+    <Compile Include="Assets\Script\game\managers\CTowerManager.cs" />
     <Compile Include="Assets\Script\game\managers\CWallManager.cs" />
+    <Compile Include="Assets\Script\game\managers\MessageDispatcher.cs" />
     <Compile Include="Assets\Script\game\states\CLevelState.cs" />
     <Compile Include="Assets\Script\game\states\CMainMenuState.cs" />
     <Compile Include="Assets\Script\game\tileMap\CTile.cs" />

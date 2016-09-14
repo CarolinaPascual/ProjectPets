@@ -71,8 +71,10 @@ public class CMainMenuState : CGameState
 
 		if (mButtonPlay.clicked ()) 
 		{
-			CGame.inst ().setState(new CLevelState ());
-			return;
+            Debug.Log("click");
+            CGame.inst ().setState(new CLevelState ());
+            Debug.Log("after setting state");
+            return;
 		}
 	}
 	

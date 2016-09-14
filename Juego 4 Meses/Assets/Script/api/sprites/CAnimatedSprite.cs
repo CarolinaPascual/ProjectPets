@@ -27,6 +27,11 @@ public class CAnimatedSprite : CSprite
         base.hit();
     }
 
+    override public void OnMessage(CTelegram aMessage)
+    {
+        //no base call since all the code will be handled on each specific object
+    }
+
     override public void render()
 	{
 		base.render ();

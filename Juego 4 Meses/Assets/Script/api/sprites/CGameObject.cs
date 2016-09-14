@@ -14,6 +14,8 @@ public class CGameObject
 	private CVector mVel;
 	private CVector mAccel;
 
+    private string ID;
+    
     private float mMinX = 0;
     private float mMaxX = 0;
     private float mMinY = 0;
@@ -43,8 +45,30 @@ public class CGameObject
 		mPos = new CVector ();
 		mVel = new CVector ();
 		mAccel = new CVector ();
+        
 	}
 	
+    public void setID(string aID)
+    {
+        ID = aID;
+        CEntityManager.inst().registerEntity(ID, this);
+    }
+    public string getID()
+    {
+        return ID;
+    }
+
+    public void handleMessage(CTelegram aMessage)
+    {
+        OnMessage(aMessage);        
+    }
+
+    virtual public void OnMessage(CTelegram aMessage)
+    {
+
+    }
+
+
     public void setFriction(float aFriction)
     {
         mFriction = aFriction;
@@ -182,11 +206,11 @@ public class CGameObject
 	
 	virtual public void update()
 	{
+
         setVelXY(CMath.Round(getVelX(), 2), CMath.Round(getVelY(), 2));
         setAccelXY(CMath.Round(getAccelX(), 2), CMath.Round(getAccelY(), 2));
         mTimeState = mTimeState + Time.deltaTime;
-
-		mVel = mVel + mAccel * Time.deltaTime;
+        mVel = mVel + mAccel * Time.deltaTime;
         mVel = mVel * mFriction;
 		mPos = mPos + mVel * Time.deltaTime;
         checkBounds();

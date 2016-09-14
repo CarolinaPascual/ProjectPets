@@ -15,7 +15,10 @@ public class CSprite : CGameObject
 
 	public const int REG_CENTER = 0;
 	public const int REG_TOP_LEFT = 1;
-	private int mRegistration;
+    public const int REG_DOWN_LEFT = 2;
+    public const int REG_DOWN_RIGHT = 3;
+    public const int REG_DOWN_MIDDLE = 4;
+    private int mRegistration;
 
 	public CSprite()
 	{
@@ -25,7 +28,12 @@ public class CSprite : CGameObject
 		mTransform = mSprite.transform;
 	}
 
-	override public void update()
+    override public void OnMessage(CTelegram aMessage)
+    {
+        //no base call since all the code will be handled on each specific object
+    }
+
+    override public void update()
 	{
 		
 		base.update ();
@@ -42,11 +50,41 @@ public class CSprite : CGameObject
         CCamera Camera = CGame.inst().getCamera();
 		base.render ();
 		int offset = 0;
+        //Offset coordinates to set the registration point
+        int offsetX = 0;
+        int offsetY = 0;
 		if (getRegistration() == REG_TOP_LEFT) {
 			if (mFlipH) {
 				offset = getWidth ();
 			}
 		}
+        if (getRegistration() == REG_DOWN_LEFT)
+        {
+            if (mFlipH)
+            {
+                offset = getWidth();
+            }
+            offsetX = 0;
+            offsetY = getHeight();
+        }
+        else if (getRegistration() == REG_DOWN_RIGHT)
+        {
+            if (mFlipH)
+            {
+                offset = getWidth();
+            }
+            offsetX = getWidth();
+            offsetY = getHeight();
+        }
+        else if (getRegistration() == REG_DOWN_MIDDLE)
+        {
+            if (mFlipH)
+            {
+                offset = getWidth();
+            }
+            offsetX = getWidth()/2;
+            offsetY = getHeight();
+        }
         float xCam = 0;
         float yCam = 0;
         if(Camera != null)
@@ -55,7 +93,7 @@ public class CSprite : CGameObject
             yCam = Camera.getY();
         }
         
-        Vector3 pos = new Vector3 (getX () + offset - xCam, getY () * -1 + yCam, getZ());
+        Vector3 pos = new Vector3 (getX () + offset - offsetX - xCam, getY () * -1 + offsetY + yCam, getZ());
 		mTransform.position = pos;
 
 		if (!mIsRotatingSprite) 

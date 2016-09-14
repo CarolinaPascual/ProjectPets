@@ -29,7 +29,7 @@ public class CButtonSprite : CAnimatedSprite
 			if (mIsMouseOver) 
 			{
 				scale = 0.9f;
-				frame = 2;
+				//frame = 2;
 			}
 		} 
 		else 
@@ -73,6 +73,7 @@ public class CButtonSprite : CAnimatedSprite
 		{
 			if (CMath.pointInRect (mousePos.x, mousePos.y, getX () - getWidth () / 2, getY () - getHeight () / 2, getWidth (), getHeight ()))
 			{
+                Debug.Log("release");
 				return true;
 			}
 		}

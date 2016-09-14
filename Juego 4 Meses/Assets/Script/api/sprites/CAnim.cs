@@ -17,7 +17,7 @@ public class CAnim
 
 	public CAnim()
 	{
-        //CUtils.log ("constructor CAnimatedSprite");
+        
 	}
 
 	// Update is called once per frame

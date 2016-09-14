@@ -57,7 +57,7 @@ public class CCamera : CGameObject {
         {
             CGame.inst().getCamera().setY(-CGameConstants.WORLD_HEIGHT);
         }
-        else if (CGame.inst().getCamera().getY() + CGame.inst().getCamera().getHeight() > CGameConstants.SCREEN_HEIGHT)
+        else if (CGame.inst().getCamera().getY() + CGame.inst().getCamera().getHeight() > CGameConstants.WORLD_HEIGHT)
         {
             CGame.inst().getCamera().setY(CGameConstants.SCREEN_HEIGHT - CGame.inst().getCamera().getHeight());
         }

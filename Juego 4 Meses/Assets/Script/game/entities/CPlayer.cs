@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CPlayer : CAnimatedSprite
 {
@@ -38,8 +39,8 @@ public class CPlayer : CAnimatedSprite
     private const float ACCEL = 0.1f;
     private const float FRICTION = 0.99f;
 
-	public static int PLAYER_WIDTH = 200;
-	public static int PLAYER_HEIGHT = 300;
+	public static int PLAYER_WIDTH = 111;
+	public static int PLAYER_HEIGHT = 132;
     public static int X_OFFSET_BOUNDING_BOX = 50;
     public static int Y_OFFSET_BOUNDING_BOX = 50;
     private int mBulletCount;
@@ -55,24 +56,30 @@ public class CPlayer : CAnimatedSprite
     private float mOldX;
     private float mOldY;
     private float mOldVelY = 0f;
+    List<CNode> mPath;
+    //temp variable to test path finding
+    public int pathPos = 0;
     
 
 
     public CPlayer()
 	{
 		setFrames (Resources.LoadAll<Sprite> ("Sprites/player"));
-        setOldXYPosition();
+        //setOldXYPosition();
         setMaxSpeed(CTileMap.TILE_HEIGHT);
         setName("Player");
         setSortingLayerName ("Player");
-        setRegistration(CSprite.REG_TOP_LEFT);
+        setRegistration(CSprite.REG_DOWN_LEFT);
         setWidth(PLAYER_WIDTH);
         setHeight(PLAYER_HEIGHT);
-        setXY (0, CGameConstants.SCREEN_HEIGHT - getHeight() - CTileMap.TILE_HEIGHT/2.5f);
         mOldX = getX();
         mOldY = getY();
         setState (STATE_STAND);
         render ();
+        mPath = findPath();
+        //ver como generar IDs unicos y a su ves utiles para broadcast y a la vez diferenciamiento de multiples unidades
+        setID("PLAYER");
+        CPlayerManager.inst().add(this);
         
 	}
 
@@ -112,31 +119,34 @@ public class CPlayer : CAnimatedSprite
             }
                 
         }*/
+
         if (getState() == STATE_STAND)
         {
             if (CKeyboard.pressed(CKeyboard.LEFT) || CKeyboard.pressed(CKeyboard.RIGHT))
             {
                 setState(CPlayer.STATE_WALKING);
                 return;
+                
             }
         }
-
+        
         if (getState() == STATE_WALKING)
         {
-            if(!CKeyboard.pressed(CKeyboard.LEFT) && !CKeyboard.pressed(CKeyboard.RIGHT))
+            if ((int)(getTimeState() * 10) % 1 == 0)
             {
-                stopMove();
-            }
-            else if (CKeyboard.pressed(CKeyboard.RIGHT))
-            {
-                setVelX(CPlayer.SPEED);
-            }
-            else if (CKeyboard.pressed(CKeyboard.LEFT))
-            {
-                setVelX(-CPlayer.SPEED);
+                
+                if (pathPos < mPath.Count)
+                {
+                    setXY(mPath[pathPos].getX() * CTileMap.TILE_WIDTH, mPath[pathPos].getY() * CTileMap.TILE_HEIGHT);
+                    pathPos += 1;
+                }else
+                {
+                    setState(CPlayer.STATE_STAND);
+                    return;
+                }
             }
         }
-                
+        /*        
         else if (getState() == CPlayer.STATE_DYING)
         {
             if (isEnded())
@@ -156,14 +166,23 @@ public class CPlayer : CAnimatedSprite
         
         }
     
+    */
 
-        checkBorders();
+        //checkBorders();
         base.update();
-        setOldXYPosition();
+        //setOldXYPosition();
+
+
 
     }
-	
-	override public void render()
+
+    override public void OnMessage(CTelegram aMessage)
+    {
+        //no base call since all the code will be handled on each specific object
+
+    }
+
+    override public void render()
 	{
         if (getState() == CPlayer.STATE_GAME_OVER)
         {
@@ -192,7 +211,15 @@ public class CPlayer : CAnimatedSprite
         base.destroy();
 	}
 
-
+    private List<CNode> findPath()
+    {
+        AStar mAStar = new AStar();
+        if (mAStar.findPath(CTileMap.inst().getGrid()))
+        {
+            return mAStar.getPath();
+        }
+        return null;
+    }
     
     private void checkBorders()
     {
@@ -255,14 +282,14 @@ public class CPlayer : CAnimatedSprite
         if (getState () == STATE_STAND) 
 		{
             Debug.Log("STATE STAND");
-            initAnimation (1, 6, 3, true);
+            initAnimation (1, 1, 3, false);
 			stopMove();
             
 		}
         else if (getState () == STATE_WALKING) 
 		{
             Debug.Log("STATE WALKING");
-            initAnimation (7, 14, 10, true);
+            initAnimation (1, 6, 5, true);
 		}
         else if (getState() == STATE_FREEZE)
         {

@@ -28,7 +28,27 @@ public class CMath
 		return aDeg;
 	}
 
-	public static bool pointInRect(float aX, float aY, float aRectX, float aRectY, float aRectWidth, float aRectHeight)
+    public static float sqrt(float aNum)
+    {
+        return Mathf.Sqrt(aNum);
+    }
+
+    public static float sqrt(int aNum)
+    {
+        return Mathf.Sqrt(aNum);
+    }
+
+    public static float abs(float aNum)
+    {
+        return Mathf.Abs(aNum);
+    }
+
+    public static int abs(int aNum)
+    {
+        return Mathf.Abs(aNum);
+    }
+
+    public static bool pointInRect(float aX, float aY, float aRectX, float aRectY, float aRectWidth, float aRectHeight)
 	{
 		return (aX >= aRectX && aX <= aRectX + aRectWidth && aY >= aRectY && aY <= aRectY + aRectHeight);
 	}
@@ -52,9 +72,38 @@ public class CMath
 		
 		return aValue2;
 	}
-	
-	// Convert from radians to degrees.
-	public static float radToDeg(float aAngle)
+
+    public static int min(int aValue1, int aValue2)
+    {
+        if (aValue1 < aValue2)
+        {
+            return aValue1;
+        }
+
+        return aValue2;
+    }
+    public static float max(float aValue1, float aValue2)
+    {
+        if (aValue1 > aValue2)
+        {
+            return aValue1;
+        }
+
+        return aValue2;
+    }
+
+    public static int max(int aValue1, int aValue2)
+    {
+        if (aValue1 > aValue2)
+        {
+            return aValue1;
+        }
+
+        return aValue2;
+    }
+
+    // Convert from radians to degrees.
+    public static float radToDeg(float aAngle)
 	{
 		return aAngle * CMath.RAD_TO_DEG; 
 		

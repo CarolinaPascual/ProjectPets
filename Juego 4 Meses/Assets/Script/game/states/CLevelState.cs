@@ -6,34 +6,57 @@ public class CLevelState : CGameState
     //State Machine to define Tiles based on where you are located(garden, house, etc..)
     public const int HOME = 0;
     private CPlayer mPlayer;
-	//private CBulletManager mBulletManager;
-	//private CEnemyManager mEnemyManager;
+    //private CBulletManager mBulletManager;
+    //private CEnemyManager mEnemyManager;
+    private CPlayerManager mPlayerManager;
     //private CCloudManager mCloudManager;
     //private CBackgroundManager mBackgroundManager;
     private CWallManager mWallManager;
+    private CTowerManager mTowerManager;
+    private CEntityManager mEntityManager;
+    private MessageDispatcher mMessageDispatcher;
     //private static int mCloudSpeed = 15;
     private CTileMap mMap;
     private CCamera mCamera;
     public static int mLevel = 1;
-    private CEnemy mEnemy1;
+    private CEnemy mEnemy1;    
+    private CTower mCatTower;
+    //This can be changed so each unit has a spawning point
+    private int mStartPositionX = 15;
+    private int mStartPositionY = 15;
+    //this can be changed to have separate targets
+    public const int mEndPositionX = 85;
+    public const int mEndPositionY = 23;
 
     public CLevelState()
 	{
-		mPlayer = new CPlayer ();
-		//mBulletManager = new CBulletManager ();
-		//mEnemyManager = new CEnemyManager ();
-       // mCloudManager = new CCloudManager();
+
+        mEntityManager = new CEntityManager();
+        mMessageDispatcher = new MessageDispatcher();
+        //mBulletManager = new CBulletManager ();
+        //mEnemyManager = new CEnemyManager ();
+        mPlayerManager = new CPlayerManager();
+        // mCloudManager = new CCloudManager();
         //  mBackgroundManager = new CBackgroundManager();
         mWallManager = new CWallManager();
+        mTowerManager = new CTowerManager();
+        //Debug.Log("wall ready");
         mMap = new CTileMap(1);
+        //Debug.Log("Map ready");
+        mPlayer = new CPlayer();
+        //Debug.Log("Player ready");
+        mPlayer.setXY(mStartPositionX * CTileMap.TILE_WIDTH, mStartPositionY * CTileMap.TILE_HEIGHT);
+        mCatTower = new CTower(0);
+        mCatTower.setXY(mStartPositionX * CTileMap.TILE_WIDTH, mStartPositionY * CTileMap.TILE_HEIGHT);
         mCamera = new CCamera();
+        //Debug.Log("Camera ready");
         mCamera.setXY(0,0);
         mCamera.setGameObjectToFollow(mPlayer);
         CGame.inst().setCamera(mCamera);
         //createClouds();
         //mEnemy1 = new CEnemy();
         //mEnemy1.setXY(600, CGameConstants.SCREEN_HEIGHT - mEnemy1.getHeight() - CTileMap.TILE_HEIGHT);
-
+        //Debug.Log("Level state constructed");
     }
 
 
@@ -138,7 +161,6 @@ public class CLevelState : CGameState
     private void nextLevel() {
         
         mMap.destroy();
-        Debug.Log("asfkasdgfsdgfsdk");
         mLevel += 1;
         mMap.loadLevel(mLevel);
         //mPlayer.restartPlayer();
@@ -153,15 +175,14 @@ public class CLevelState : CGameState
         */
         mCamera.setXY(0, 0);
         CEnemyManager.inst().destroy();
-        //mEnemyManager = new CEnemyManager();
-        mEnemy1 = new CEnemy();
-        mEnemy1.setXY(1000, CGameConstants.SCREEN_HEIGHT - mEnemy1.getHeight() - CTileMap.TILE_HEIGHT);
+        
 
 
     }
 	override public void update()
 	{
 		base.update ();
+        mMessageDispatcher.update();
         //checkLoseCondition();
         //checkWinCondition();
         if (CKeyboard.firstPress (CKeyboard.ESCAPE)) 
@@ -171,7 +192,8 @@ public class CLevelState : CGameState
 		}
         //mBackgroundManager.update();
         mWallManager.update();
-        mPlayer.update();
+        mPlayerManager.update();
+        mTowerManager.update();
         //mBulletManager.update();
 		//mEnemyManager.update();
         //mCloudManager.update();
@@ -181,6 +203,23 @@ public class CLevelState : CGameState
         
         
 	}
+
+    public int[] getEndPosition()
+    {
+        int[] array = new int[2];
+        array[0] = mEndPositionX;
+        array[1] = mEndPositionY;
+        return array;
+    }
+
+    public int[] getStartPosition()
+    {
+        int[] array = new int[2];
+        array[0] = mStartPositionX;
+        array[1] = mStartPositionY;
+        return array;
+    }
+
 
     /*private void checkLoseCondition()
     {
@@ -211,7 +250,8 @@ public class CLevelState : CGameState
         //mBackgroundManager.render();
         mWallManager.render();
         //mCloudManager.render();
-		mPlayer.render();
+		mPlayerManager.render();
+        mTowerManager.render();
         //mBulletManager.render();
 		//mEnemyManager.render();
         mMap.render();
@@ -225,8 +265,10 @@ public class CLevelState : CGameState
         //mBackgroundManager = null;
         mWallManager.destroy();
         mWallManager = null;
-        mPlayer.destroy();
-		mPlayer = null;
+        mPlayerManager.destroy();
+        mPlayerManager = null;
+        mTowerManager.destroy();
+        mTowerManager = null;
         //mBulletManager.destroy();
         //mBulletManager = null;
         //mEnemyManager.destroy();
@@ -239,3 +281,4 @@ public class CLevelState : CGameState
 
 	
 }
+

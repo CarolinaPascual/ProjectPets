@@ -19,8 +19,8 @@ public class CGame : MonoBehaviour
 		CMouse.init();
 		CKeyboard.init ();
 
-		//setState(new CLevelState ());
-		setState(new CMainMenuState ());
+		setState(new CLevelState ());
+		//setState(new CMainMenuState ());
 	}
 
 	static public CGame inst()
@@ -82,7 +82,8 @@ public class CGame : MonoBehaviour
 		}
 
 		mState = aState;
-		mState.init ();
+        Debug.Log("Level State Started");
+        mState.init ();
 	}
 
 	public CGameState getState()
